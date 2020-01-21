@@ -1,157 +1,250 @@
 import React from "react"
 
-/**
- * Challenge: Wire up the partially-finished travel form so that it works!
- * Remember to use the concept of controlled forms
- * https://reactjs.org/docs/forms.html
- * 
- * All information should be populating the text below the form in real-time
- * as you're filling it out
- * 
- * This exercise is adapted from the V School curriculum on vanilla JS forms:
- * https://coursework.vschool.io/travel-form/
- * 
- * All of our challenges and learning resources are open for the public
- * to play around with and learn from at https://coursework.vschool.io
- */
-
 class App extends React.Component {
+
+    calc(a, b) {
+        let sub = a + b
+        if (sub > 2) {
+            return 0.5
+        } else {
+            return -0.5
+        }
+    }
+
+   calc1(a, b) {
+        if (a && b > 0) {
+            return 0.75
+        } else {
+            return -0.75
+        }
+   }
+
+   sub(a, b) {
+       return this.calc(a, b) + this.calc1(a, b)
+   }
+   
+   total() {
+       return (
+        this.sub(Number(this.state.result1), Number(this.state.result2)) + 
+        this.sub(Number(this.state.result3), Number(this.state.result4)) +
+        this.sub(Number(this.state.result5), Number(this.state.result6)) +
+        this.sub(Number(this.state.result7), Number(this.state.result8)) +
+        this.sub(Number(this.state.result9), Number(this.state.result10)) +
+        this.sub(Number(this.state.result11), Number(this.state.result12)) +
+        this.sub(Number(this.state.result13), Number(this.state.result14)) +
+        this.sub(Number(this.state.result15), Number(this.state.result16)) 
+       )
+   }
+
+   stake() {
+       if (this.total < 0) {
+           return -(this.total() / 10)
+        } else {
+           return this.total() / 10
+       }
+   }
+
     constructor() {
         super()
         this.state = {
-            firstName: "",
-            lastName: "",
-            age: "",
-            gender: "",
-            destination: "",
-            isVegan: false,
-            isKosher: false,
-            isDiabetic: false
-            
-            
-            
+            result1: "",
+            result2: "",
+            result3: "",
+            result4: "",
+            result5: "",
+            result6: "",
+            result7: "",
+            result8: "",
+            result9: "",
+            result10: "",
+            result11: "",
+            result12: "",
+            result13: "",
+            result14: "",
+            result15: "",
+            result16: "",
         }
         this.handleChange = this.handleChange.bind(this)
     }
     
     handleChange(event) {
         const {name, value, type, checked} = event.target
-        type === "checkbox" ? this.setState({[name]: checked}) : this.setState({[name]: value})
+        this.setState({[name]: value})
     }
+
     
+
+
     render() {
         return (
+            <div>
+                <h1>Over / Under 2.5 Clculator</h1>
             <main>
                 <form>
+                    <p>We take into consideration the last 4 matches of each team involved in the current game (that’s 8 matches in total) </p>
+                    <h2>Team 1</h2>
+                    
                     <input 
-                        type="text"
-                        value={this.state.firstName}
-                        name="firstName"
-                        placeholder="First Name" 
+                        type="number"
+                        value={this.state.result1}
+                        name="result1"
+                        placeholder="result1" 
                         onChange={this.handleChange}
                     />
-                    <br />
+                    
                     <input 
-                        type="text"
-                        value={this.state.lastName}
-                        name="lastName"
-                        placeholder="Last Name" 
+                        type="number"
+                        value={this.state.result2}
+                        name="result2"
+                        placeholder="" 
                         onChange={this.handleChange}
                     />
                     <br />
                     <input
                         type="number"
-                        value={this.state.age}
-                        name="age" 
-                        placeholder="Age" 
+                        value={this.state.result3}
+                        name="result3" 
+                        placeholder="result2" 
                         onChange={this.handleChange}
-                    /><br 
                     />
                     
-                     <label>Gender Options:</label>
-                    <br />
-                    <label>
-                    <input 
-                        type="radio"
-                        name="gender"
-                        value="male"
-                        checked={this.state.gender === "male"}
+                    
+                    <input
+                        type="number"
+                        value={this.state.result4}
+                        name="result4" 
+                        placeholder="" 
                         onChange={this.handleChange}
-                    />Male
-                    </label>
+                    />
                     
                     
                     <br />
-                    <label>
                     <input 
-                        type="radio"
-                        name="gender"
-                        value="female"
-                        checked={this.state.gender === "female"}
+                        type="number"
+                        value={this.state.result5}
+                        name="result5"
+                        placeholder="result3" 
                         onChange={this.handleChange}
-                    />Female
-                    </label>
-                    <br />
+                    />
                     
-                    <br />
-                    
-                     <label>Destination:</label>
-                <select 
-                    name="destination"
-                    value={this.state.destination} 
-                    onChange={this.handleChange}
-                >
-                    <option value="" >--Please choose a destination--</option>
-                    <option value="Mars" >Mars</option>
-                    <option value="Luna" >Luna</option>
-                    <option value="Venus" >Venus</option>
-                </select>
-                    <br />
-                    
-                    <label>Dietary restrictions:</label>
-                    <br />
-                    <label>
                     <input 
-                        type="checkbox"
-                        name="isVegan"
-                        checked={this.state.isVegan}
+                        type="number"
+                        value={this.state.result6}
+                        name="result6"
+                        placeholder="" 
                         onChange={this.handleChange}
-                    /> Vegan?
-                    </label>
+                    />
                     <br />
-                    <label>
-                    <input 
-                        type="checkbox"
-                        name="isKosher"
-                        checked={this.state.isKosher}
+                    <input
+                        type="number"
+                        value={this.state.result7}
+                        name="result7" 
+                        placeholder="result4" 
                         onChange={this.handleChange}
-                    /> Kosher?
-                    </label>
-                    <br />
-                    <label>
-                    <input 
-                        type="checkbox"
-                        name="isDiabetic"
-                        checked={this.state.isDiabetic}
-                        onChange={this.handleChange}
-                    /> Diabetic?
-                    </label>
-                    <br />
+                    />
                     
-                    <button>Submit</button>
+                    
+                    <input
+                        type="number"
+                        value={this.state.result8}
+                        name="result8" 
+                        placeholder="" 
+                        onChange={this.handleChange}
+                    />
+                    
+                    <br />
+                    <br />
+
+                    <h2>Team 2</h2>
+
+                    <input 
+                        type="number"
+                        value={this.state.result9}
+                        name="result9"
+                        placeholder="result1" 
+                        onChange={this.handleChange}
+                    />
+                    
+                    <input 
+                        type="number"
+                        value={this.state.result10}
+                        name="result10"
+                        placeholder="" 
+                        onChange={this.handleChange}
+                    />
+                    <br />
+                    <input
+                        type="number"
+                        value={this.state.result11}
+                        name="result11" 
+                        placeholder="result2" 
+                        onChange={this.handleChange}
+                    />
+                    
+                    
+                    <input
+                        type="number"
+                        value={this.state.result12}
+                        name="result12" 
+                        placeholder="" 
+                        onChange={this.handleChange}
+                    />
+                    
+                    
+                    <br />
+                    <input 
+                        type="number"
+                        value={this.state.result13}
+                        name="result13"
+                        placeholder="result3" 
+                        onChange={this.handleChange}
+                    />
+                    
+                    <input 
+                        type="number"
+                        value={this.state.result14}
+                        name="result14"
+                        placeholder="" 
+                        onChange={this.handleChange}
+                    />
+                    <br />
+                    <input
+                        type="number"
+                        value={this.state.result15}
+                        name="result15" 
+                        placeholder="result4" 
+                        onChange={this.handleChange}
+                    />
+                    
+                    
+                    <input
+                        type="number"
+                        value={this.state.result16}
+                        name="result16" 
+                        placeholder="" 
+                        onChange={this.handleChange}
+                    />
+                    
+                    <br />
+                    <br />
+                    <button>Reset</button>
                 </form>
                 <hr />
-                <h2>Entered information:</h2>
-                <p>Your name: {this.state.firstName} {this.state.lastName}</p>
-                <p>Your age: {this.state.age}</p>
-                <p>Your gender: {this.state.gender}</p>
-                <p>Your destination: {this.state.destination}</p>
-                <p>Your dietary restrictions:</p>
-                <p>Vegan: {this.state.isVegan ? "Yes" : "No"}</p>
-                <p>Kosher: {this.state.isKosher ? "Yes" : "No"}</p>
-                <p>Diabetic: {this.state.isDiabetic ? "Yes" : "No"}</p>
+                <h2>Result:</h2>
+                
+                <h3>total: {this.total()} points</h3>
+                <p>When the result is positive we play Over 2.5 and vice versa</p>
+                <h3>stake: {this.stake()}</h3>
+                <p>It is recommended to place a bet only if we get +/- 5 points.
+                    That would mean to put a 5/10 units bet on over 2.5 goals
+                    if we have 5 points. 
+                </p>
+                <br />
+                <br />
+                
 
             </main>
+            </div>
         )
     }
 }
