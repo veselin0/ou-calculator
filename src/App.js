@@ -37,12 +37,8 @@ class App extends React.Component {
    }
 
    stake() {
-       if (this.total < 0) {
-           return -(this.total() / 10)
-        } else {
-           return this.total() / 10
-       }
-   }
+       return this.total() / 10
+    }
 
     constructor() {
         super()
@@ -68,7 +64,7 @@ class App extends React.Component {
     }
     
     handleChange(event) {
-        const {name, value, type, checked} = event.target
+        const {name, value} = event.target
         this.setState({[name]: value})
     }
 
@@ -78,7 +74,7 @@ class App extends React.Component {
     render() {
         return (
             <div>
-                <h1>Over / Under 2.5 Clculator</h1>
+                <h1>Over / Under 2.5 Calculator</h1>
             <main>
                 <form>
                     <p>We take into consideration the last 4 matches of each team involved in the current game (that’s 8 matches in total) </p>
@@ -90,6 +86,7 @@ class App extends React.Component {
                         name="result1"
                         placeholder="result1" 
                         onChange={this.handleChange}
+                        autoFocus
                     />
                     
                     <input 
@@ -152,11 +149,12 @@ class App extends React.Component {
                         onChange={this.handleChange}
                     />
                     
+                    
                     <br />
                     <br />
 
                     <h2>Team 2</h2>
-
+                    
                     <input 
                         type="number"
                         value={this.state.result9}
@@ -227,20 +225,25 @@ class App extends React.Component {
                     
                     <br />
                     <br />
+                    
                     <button>Reset</button>
+                    
                 </form>
                 <hr />
                 <h2>Result:</h2>
                 
                 <h3>total: {this.total()} points</h3>
                 <p>When the result is positive we play Over 2.5 and vice versa</p>
-                <h3>stake: {this.stake()}</h3>
+                <h3>stake: {Math.abs(this.stake())}</h3>
                 <p>It is recommended to place a bet only if we get +/- 5 points.
                     That would mean to put a 5/10 units bet on over 2.5 goals
                     if we have 5 points. 
                 </p>
                 <br />
-                <br />
+               
+
+                <a href="https://www.online-betting.me.uk/strategies/vincent">Learn more:</a>
+
                 
 
             </main>
