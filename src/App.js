@@ -242,7 +242,7 @@ class App extends React.Component {
                     <br />
                 
 
-                    <a href="https://www.online-betting.me.uk/strategies/vincent">Learn more:</a>
+                    <a target="_blank" href="https://www.online-betting.me.uk/strategies/vincent">Learn more:</a>
 
                     
 
