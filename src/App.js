@@ -2,6 +2,12 @@ import React from "react"
 
 class App extends React.Component {
 
+    state = {
+        listOfResults: new Array(8)
+            .fill([])
+            .map(() => ['', '']),
+    };
+
     calc(a, b) {
         let sub = a + b
         if (sub > 2) {
@@ -11,240 +17,92 @@ class App extends React.Component {
         }
     }
 
-   calc1(a, b) {
+    calc1(a, b) {
         if (a && b > 0) {
             return 0.75
         } else {
             return -0.75
         }
-   }
-
-   sub(a, b) {
-       return this.calc(a, b) + this.calc1(a, b)
-   }
-   
-   total() {
-       return (
-        this.sub(Number(this.state.result1), Number(this.state.result2)) + 
-        this.sub(Number(this.state.result3), Number(this.state.result4)) +
-        this.sub(Number(this.state.result5), Number(this.state.result6)) +
-        this.sub(Number(this.state.result7), Number(this.state.result8)) +
-        this.sub(Number(this.state.result9), Number(this.state.result10)) +
-        this.sub(Number(this.state.result11), Number(this.state.result12)) +
-        this.sub(Number(this.state.result13), Number(this.state.result14)) +
-        this.sub(Number(this.state.result15), Number(this.state.result16)) 
-       )
-   }
-
-   stake() {
-       return this.total() / 10
     }
 
-    constructor() {
-        super()
-        this.state = {
-            result1: "",
-            result2: "",
-            result3: "",
-            result4: "",
-            result5: "",
-            result6: "",
-            result7: "",
-            result8: "",
-            result9: "",
-            result10: "",
-            result11: "",
-            result12: "",
-            result13: "",
-            result14: "",
-            result15: "",
-            result16: "",
-        }
-        this.handleChange = this.handleChange.bind(this)
-    }
-    
-    handleChange(event) {
-        const {name, value} = event.target
-        this.setState({[name]: value})
+    sub(a, b) {
+        return this.calc(a, b) + this.calc1(a, b)
     }
 
-    
+    total() {
+        const result = this.state.listOfResults.reduce((total, next) => {
+            // 1   // 2
+            const [goalsA, goalsB] = next;
+            const subResult = this.sub(goalsA, goalsB);
 
+            const newTotal = total + subResult;
+
+            return newTotal;
+
+        }, 0);
+
+        return result;
+    }
+
+    stake() {
+        return this.total() / 10
+    }
+
+    handleChange = (value, index, innerIndex) => {
+
+        const {listOfResults} = this.state;
+        const newList = Array.from(listOfResults);
+        newList[index][innerIndex] = Number(value);
+
+        this.setState({listOfResults: newList});
+    };
 
     render() {
+        const {listOfResults} = this.state;
+
         return (
             <div>
                 <h1>Over / Under 2.5 Calculator</h1>
                 <main>
                     <form>
-                        <p>We take into consideration the last 4 matches of each team involved in the current game (that’s 8 matches in total) </p>
-                        <h2>Team 1</h2>
-                        
-                        <input 
-                            type="number"
-                            value={this.state.result1}
-                            name="result1"
-                            placeholder="result1" 
-                            onChange={this.handleChange}
-                            autoFocus
-                        />
-                        
-                        <input 
-                            type="number"
-                            value={this.state.result2}
-                            name="result2"
-                            placeholder="" 
-                            onChange={this.handleChange}
-                        />
-                        <br />
-                        <input
-                            type="number"
-                            value={this.state.result3}
-                            name="result3" 
-                            placeholder="result2" 
-                            onChange={this.handleChange}
-                        />
-                        
-                        
-                        <input
-                            type="number"
-                            value={this.state.result4}
-                            name="result4" 
-                            placeholder="" 
-                            onChange={this.handleChange}
-                        />
-                        
-                        
-                        <br />
-                        <input 
-                            type="number"
-                            value={this.state.result5}
-                            name="result5"
-                            placeholder="result3" 
-                            onChange={this.handleChange}
-                        />
-                        
-                        <input 
-                            type="number"
-                            value={this.state.result6}
-                            name="result6"
-                            placeholder="" 
-                            onChange={this.handleChange}
-                        />
-                        <br />
-                        <input
-                            type="number"
-                            value={this.state.result7}
-                            name="result7" 
-                            placeholder="result4" 
-                            onChange={this.handleChange}
-                        />
-                        
-                        
-                        <input
-                            type="number"
-                            value={this.state.result8}
-                            name="result8" 
-                            placeholder="" 
-                            onChange={this.handleChange}
-                        />
-                        
-                        
-                        <br />
-                        <br />
+                        <p>We take into consideration the last 4 matches of each team involved in the current game
+                            (that’s 8 matches in total) </p>
 
-                        <h2>Team 2</h2>
-                        
-                        <input 
-                            type="number"
-                            value={this.state.result9}
-                            name="result9"
-                            placeholder="result1" 
-                            onChange={this.handleChange}
-                        />
-                        
-                        <input 
-                            type="number"
-                            value={this.state.result10}
-                            name="result10"
-                            placeholder="" 
-                            onChange={this.handleChange}
-                        />
-                        <br />
-                        <input
-                            type="number"
-                            value={this.state.result11}
-                            name="result11" 
-                            placeholder="result2" 
-                            onChange={this.handleChange}
-                        />
-                        
-                        
-                        <input
-                            type="number"
-                            value={this.state.result12}
-                            name="result12" 
-                            placeholder="" 
-                            onChange={this.handleChange}
-                        />
-                        
-                        
-                        <br />
-                        <input 
-                            type="number"
-                            value={this.state.result13}
-                            name="result13"
-                            placeholder="result3" 
-                            onChange={this.handleChange}
-                        />
-                        
-                        <input 
-                            type="number"
-                            value={this.state.result14}
-                            name="result14"
-                            placeholder="" 
-                            onChange={this.handleChange}
-                        />
-                        <br />
-                        <input
-                            type="number"
-                            value={this.state.result15}
-                            name="result15" 
-                            placeholder="result4" 
-                            onChange={this.handleChange}
-                        />
-                        
-                        
-                        <input
-                            type="number"
-                            value={this.state.result16}
-                            name="result16" 
-                            placeholder="" 
-                            onChange={this.handleChange}
-                        />
-                        
-                        <br />
-                        <br />
-                        
+                        <TeamResults name="Team 1"
+                                     results={listOfResults}
+                                     onChange={this.handleChange}
+                                     sliceStart={0}
+                                     sliceSize={4} />
+
+                        <br/>
+
+                        <TeamResults name="Team 2"
+                                     results={listOfResults}
+                                     onChange={this.handleChange}
+                                     sliceStart={4}
+                                     sliceSize={4}/>
+
+                        <br/>
+
                         <button>Reset</button>
-                        
                     </form>
-                    <hr />
+
+                    <hr/>
+
                     <h2>Result:</h2>
-                    
+
                     <h3>total: {this.total()} points</h3>
                     <p>When the result is positive we play Over 2.5 and vice versa</p>
                     <h3>stake: {Math.abs(this.stake())}</h3>
                     <p>It is recommended to place a bet only if we get +/- 5 points.
                         That would mean to put a 5/10 units bet on over 2.5 goals
-                        if we have 5 points. 
+                        if we have 5 points.
                     </p>
-                    <br />
-                
+
+                    <br/>
 
                     <a target="_blank" href="https://www.online-betting.me.uk/strategies/vincent">Learn more:</a>
 
-                    
 
                 </main>
             </div>
@@ -252,7 +110,39 @@ class App extends React.Component {
     }
 }
 
-   
+const TeamResults = ({name, results, onChange, sliceStart, sliceSize}) => {
+    return (
+        <React.Fragment>
+            <h2>{name}</h2>
 
+            {
+                results
+                    .slice(sliceStart, sliceStart + sliceSize)
+                    .map((pair, index) => {
+                        return (
+                            <React.Fragment key={index}>
+                                {
+                                    pair.map((score, innerIndex) => {
+                                        return (
+                                            <input
+                                                key={innerIndex}
+                                                type="number"
+                                                value={score}
+                                                name={'result' + (index + 1)}
+                                                placeholder={innerIndex === 1 ? '' : 'result' + (index + 1)}
+                                                onChange={(e) => onChange(e.target.value, sliceStart + index, innerIndex)}
+                                                autoFocus={sliceStart + index + innerIndex === 0}/>
+                                        )
+                                    })
+                                }
 
-export default App
+                                <br/>
+                            </ React.Fragment>
+                        )
+                    })
+            }
+        </ React.Fragment>
+    )
+};
+
+export default App;
