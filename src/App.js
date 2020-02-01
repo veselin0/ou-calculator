@@ -39,7 +39,7 @@ class App extends React.Component {
         return this.total() / 10
     }
 
-    onFormChange = (e) => {
+    handleFormChange = (e) => {
         const formData = new FormData(e.currentTarget);
         const results = Array.from(formData.values()).map(val => Number(val));
         this.setState({ results });
@@ -50,7 +50,7 @@ class App extends React.Component {
             <div>
                 <h1>Over / Under 2.5 Calculator</h1>
                 <main>
-                    <form onChange={this.onFormChange}>
+                    <form onChange={this.handleFormChange}>
                         <p>We take into consideration the last 4 matches of each team involved in the current game
                             (that’s 8 matches in total) </p>
 
@@ -62,7 +62,7 @@ class App extends React.Component {
 
                         <br/>
 
-                        <button>Reset</button>
+                        <input type="reset" value="Reset" />
                     </form>
 
                     <hr/>
