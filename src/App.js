@@ -1,4 +1,5 @@
 import React from "react"
+import {TeamResults} from "./components/TeamResults";
 
 class App extends React.Component {
 
@@ -86,32 +87,6 @@ class App extends React.Component {
         )
     }
 }
-
-const TeamResults = ({name, gamesCount = 4 }) => {
-    return (
-        <React.Fragment>
-            <h2>{name}</h2>
-
-            {
-                new Array(gamesCount * 2)
-                    .fill(1)
-                    .map((result, index) => {
-                        return (
-                            <React.Fragment key={index}>
-                                <input
-                                    type="number"
-                                    name={'result' + (index + 1)}
-                                    placeholder={index % 2 === 0 ? 'result' + ((index / 2) + 1): ''}
-                                    autoFocus={index === 0}/>
-
-                                { index % 2 === 1 && <br/> }
-                            </ React.Fragment>
-                        )
-                    })
-            }
-        </ React.Fragment>
-    )
-};
 
 function toPairs(array) {
     const pairs = [];
