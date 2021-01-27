@@ -1,12 +1,9 @@
 import React from "react"
+import {TeamResults} from "./components/TeamResults";
 
 class App extends React.Component {
 
-    state = {
-        listOfResults: new Array(8)
-            .fill([])
-            .map(() => ['', '']),
-    };
+    state = { results: new Array(16).fill('') };
 
     calc(a, b) {
         let sub = a + b
@@ -30,61 +27,42 @@ class App extends React.Component {
     }
 
     total() {
-        const result = this.state.listOfResults.reduce((total, next) => {
-            // 1   // 2
+        return toPairs(this.state.results).reduce((total, next) => {
             const [goalsA, goalsB] = next;
             const subResult = this.sub(goalsA, goalsB);
 
-            const newTotal = total + subResult;
-
-            return newTotal;
-
+            return total + subResult;
         }, 0);
-
-        return result;
     }
 
     stake() {
         return this.total() / 10
     }
 
-    handleChange = (value, index, innerIndex) => {
-
-        const {listOfResults} = this.state;
-        const newList = Array.from(listOfResults);
-        newList[index][innerIndex] = Number(value);
-
-        this.setState({listOfResults: newList});
+    handleFormChange = (e) => {
+        const formData = new FormData(e.currentTarget);
+        const results = Array.from(formData.values()).map(val => Number(val));
+        this.setState({ results });
     };
 
     render() {
-        const {listOfResults} = this.state;
-
         return (
             <div>
                 <h1>Over / Under 2.5 Calculator</h1>
                 <main>
-                    <form>
+                    <form onChange={this.handleFormChange}>
                         <p>We take into consideration the last 4 matches of each team involved in the current game
                             (that’s 8 matches in total) </p>
 
-                        <TeamResults name="Team 1"
-                                     results={listOfResults}
-                                     onChange={this.handleChange}
-                                     sliceStart={0}
-                                     sliceSize={4} />
+                        <TeamResults name="Team 1" />
 
                         <br/>
 
-                        <TeamResults name="Team 2"
-                                     results={listOfResults}
-                                     onChange={this.handleChange}
-                                     sliceStart={4}
-                                     sliceSize={4}/>
+                        <TeamResults name="Team 2" />
 
                         <br/>
 
-                        <button>Reset</button>
+                        <input type="reset" value="Reset" />
                     </form>
 
                     <hr/>
@@ -110,39 +88,15 @@ class App extends React.Component {
     }
 }
 
-const TeamResults = ({name, results, onChange, sliceStart, sliceSize}) => {
-    return (
-        <React.Fragment>
-            <h2>{name}</h2>
+function toPairs(array) {
+    const pairs = [];
 
-            {
-                results
-                    .slice(sliceStart, sliceStart + sliceSize)
-                    .map((pair, index) => {
-                        return (
-                            <React.Fragment key={index}>
-                                {
-                                    pair.map((score, innerIndex) => {
-                                        return (
-                                            <input
-                                                key={innerIndex}
-                                                type="number"
-                                                value={score}
-                                                name={'result' + (index + 1)}
-                                                placeholder={innerIndex === 1 ? '' : 'result' + (index + 1)}
-                                                onChange={(e) => onChange(e.target.value, sliceStart + index, innerIndex)}
-                                                autoFocus={sliceStart + index + innerIndex === 0}/>
-                                        )
-                                    })
-                                }
+    for (let i = 0; i < array.length; i += 2) {
+        const nextPair = array.slice(i, i + 2);
+        pairs.push(nextPair);
+    }
 
-                                <br/>
-                            </ React.Fragment>
-                        )
-                    })
-            }
-        </ React.Fragment>
-    )
-};
+    return pairs;
+}
 
 export default App;
